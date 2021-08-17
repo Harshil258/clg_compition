@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "878292540107",
+    "project_id": "clg-compition",
+    "storage_bucket": "clg-compition.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878292540107:android:725c0e6ca8bdd34412194e",
+        "android_client_info": {
+          "package_name": "com.webninjas.clgcompition"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878292540107-alfif159ktgkpk5bbd04nuf0cksksa6f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLEhgpmtNX25ijxrGRoVtUZONiV9e52tQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878292540107-alfif159ktgkpk5bbd04nuf0cksksa6f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
