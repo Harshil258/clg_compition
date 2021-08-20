@@ -12,6 +12,7 @@ object pref {
     var CLASSNAME : String = ""
     var CLG_NAME : String = ""
     var getpermiossion : String = ""
+    var competitionname = ""
 
 
 

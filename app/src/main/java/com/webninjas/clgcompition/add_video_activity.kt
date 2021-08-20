@@ -77,6 +77,64 @@ class add_video_activity : AppCompatActivity() {
         }
     }
 
+    private fun uploadvideo(imagepath: String) {
+
+        if (imagepath != null) {
+            progressView.visibility = View.VISIBLE
+            var file = Uri.fromFile(File(imagepath))
+            var reference: StorageReference = FirebaseStorage.getInstance()
+                .getReference("Video/${System.currentTimeMillis()}.mp4")
+
+            reference.putFile(file)
+                .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot?> {
+                    reference.downloadUrl
+                        .addOnSuccessListener(OnSuccessListener<Uri> { uri -> //now sUrl contains downloadURL
+                            var sUrl = uri.toString()
+                            Log.d("ESdgsergsrgh", sUrl)
+                            db = FirebaseFirestore.getInstance()
+
+                            val sdf = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
+                            val currentDateandTime: String = sdf.format(Date())
+                            val data = hashMapOf(
+                                "number" to MOBILE_NO,
+                                "timestamp" to currentDateandTime,
+                                "url" to sUrl,
+                                "compititionname" to pref.competitionname
+                            )
+
+                            Log.d("Agagsg", pref.competitionname.toString())
+
+                            db.collection("videos").document()
+                                .set(data)
+                                .addOnCompleteListener {
+                                    if (it.isSuccessful) {
+                                        progressView.visibility = View.GONE
+                                        Toast.makeText(
+                                            this,
+                                            "Video Has Been Upload Successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        this.imagepath = ""
+                                        finish()
+                                    }
+                                }
+                        }).addOnFailureListener(OnFailureListener {
+                            progressView.visibility = View.GONE
+                            Toast.makeText(
+                                this,
+                                "Something Went Wrong",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        })
+                }).addOnProgressListener {
+                    val progress: Double =
+                        100.0 * it.getBytesTransferred() / it.getTotalByteCount()
+                    progressView.progress = progress.toFloat()
+                    progressView.labelText = "${progress.toInt()}%"
+                }
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == 3000) {
@@ -105,68 +163,6 @@ class add_video_activity : AppCompatActivity() {
         andExoPlayerView.releasePlayer()
     }
 
-    private fun uploadvideo(imagepath: String) {
-        if (imagepath != null) {
-            progressView.visibility = View.VISIBLE
-            var file = Uri.fromFile(File(imagepath))
-            var reference: StorageReference = FirebaseStorage.getInstance()
-                .getReference("Videos/${pref.competitionname}/${System.currentTimeMillis()}.mp4")
-
-            reference.putFile(file)
-                .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot?> {
-                    reference.downloadUrl
-                        .addOnSuccessListener(OnSuccessListener<Uri> { uri -> //now sUrl contains downloadURL
-                            var sUrl = uri.toString()
-                            Log.d("ESdgsergsrgh", sUrl)
-                            db = FirebaseFirestore.getInstance()
-
-                            val sdf = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
-                            val currentDateandTime: String = sdf.format(Date())
-                            val data = hashMapOf(
-                                "number" to MOBILE_NO,
-                                "timestamp" to currentDateandTime,
-                                "url" to sUrl
-                            )
-
-                            Log.d("Agagsg", pref.competitionname.toString())
-
-                            db.collection("competitions").document(pref.competitionname.toString())
-                                .collection("Videos").document().set(data).addOnCompleteListener {
-                                    if (it.isSuccessful) {
-                                        db.collection("users").document(MOBILE_NO)
-                                            .collection("Videos").document().set(data)
-                                            .addOnCompleteListener {
-                                                if (it.isSuccessful) {
-                                                    progressView.visibility = View.GONE
-                                                    Toast.makeText(
-                                                        this,
-                                                        "Video Has Been Upload Successfully",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                    this.imagepath = ""
-                                                    finish()
-                                                }
-                                            }
-                                    }
-                                }
-
-
-                        }).addOnFailureListener(OnFailureListener {
-                            progressView.visibility = View.GONE
-                            Toast.makeText(
-                                this,
-                                "Something Went Wrong",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        })
-                }).addOnProgressListener {
-                    val progress: Double =
-                        100.0 * it.getBytesTransferred() / it.getTotalByteCount()
-                    progressView.progress = progress.toFloat()
-                    progressView.labelText = "${progress.toInt()}%"
-                }
-        }
-    }
 
 
 }

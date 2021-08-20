@@ -35,7 +35,6 @@ class Video_open_Activity : AppCompatActivity() {
         andExoPlayerView = findViewById<AndExoPlayerView>(R.id.andExoPlayerView)
         andExoPlayerView.setSource(videourl)
 
-
         setlikes(compititionname, documentid)
 
         like.setOnClickListener {
@@ -44,6 +43,24 @@ class Video_open_Activity : AppCompatActivity() {
 
 
     }
+
+    private fun setlikes(compititionname: String, documentid: String) {
+        db.collection("videos").document(documentid)
+            .collection("Likes").get().addOnCompleteListener {
+                Log.d("sgfaerhaerh", "sucess")
+                for (document in it.result?.documents!!) {
+                    var number = document.id.toString()
+                    Log.d("sgfaerhaerh", number)
+                    Log.d("sgfaerhaerh", pref.MOBILE_NO)
+                    if (pref.MOBILE_NO.toLong() == number.toLong()) {
+                        like.setImageDrawable(getDrawable(R.drawable.ic_liked))
+                        isliked = true
+                        Log.d("arhgertrherth", "liked  " + pref.MOBILE_NO)
+                    }
+                }
+            }
+    }
+
 
     override fun onPause() {
         super.onPause()
@@ -61,13 +78,13 @@ class Video_open_Activity : AppCompatActivity() {
 //        videoplayer.suspend()
     }
 
-    private fun managelike(compititionname: String, documentid : String) {
+    private fun managelike(compititionname: String, documentid: String) {
         Log.d("arhgerherth", like.drawable.toString())
         Log.d("arhgerherth", getDrawable(R.drawable.ic_liked).toString())
 
         if (isliked) {
             Log.d("arhgerherth", "unliked")
-            db.collection("competitions").document(compititionname).collection("Videos")
+            db.collection("videos")
                 .document(documentid)
                 .collection("Likes").document(pref.MOBILE_NO).delete()
             isliked = false
@@ -80,7 +97,7 @@ class Video_open_Activity : AppCompatActivity() {
             var map: MutableMap<String, String> = HashMap()
             map.put("mobile", pref.MOBILE_NO)
             map.put("Time", current)
-            db.collection("competitions").document(compititionname).collection("Videos")
+            db.collection("videos")
                 .document(documentid)
                 .collection("Likes").document(pref.MOBILE_NO).set(map)
                 .addOnCompleteListener {
@@ -95,22 +112,5 @@ class Video_open_Activity : AppCompatActivity() {
         }
     }
 
-    fun setlikes(compititionname: String, documentid : String) {
 
-        db.collection("competitions").document(compititionname).collection("Videos")
-            .document(documentid)
-            .collection("Likes").get().addOnCompleteListener {
-                Log.d("sgfaerhaerh", "sucess")
-                for (document in it.result?.documents!!) {
-                    var number = document.id.toString()
-                    Log.d("sgfaerhaerh", number)
-                    Log.d("sgfaerhaerh", pref.MOBILE_NO)
-                    if (pref.MOBILE_NO.toLong() == number.toLong()) {
-                        like.setImageDrawable(getDrawable(R.drawable.ic_liked))
-                        isliked = true
-                        Log.d("arhgertrherth", "liked  " + pref.MOBILE_NO)
-                    }
-                }
-            }
-    }
 }

@@ -26,6 +26,7 @@ import com.tuyenmonkey.mkloader.MKLoader
 import com.webninjas.clgcompititionadmin.Main_video_list
 import com.webninjas.clgcompititionadmin.R
 import com.webninjas.clgcompititionadmin.models.competitions_model
+import com.webninjas.clgcompititionadmin.pref.competitionname
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -133,7 +134,7 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
 
         holder.categoriitem.setOnClickListener {
             var intent = Intent(context, Main_video_list::class.java)
-            intent.putExtra("competitionname",datalist[position].competition_name)
+            competitionname = datalist[position].competition_name
             context.startActivity(intent)
         }
     }

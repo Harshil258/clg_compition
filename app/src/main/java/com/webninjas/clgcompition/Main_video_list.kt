@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.tuyenmonkey.mkloader.MKLoader
 import com.webninjas.clgcompition.adapters.videolist_adapter
 import com.webninjas.clgcompition.models.videolist_model
+import com.webninjas.clgcompition.pref.competitionname
 
 class Main_video_list : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class Main_video_list : AppCompatActivity() {
     lateinit var db: FirebaseFirestore
     lateinit var MKLoader : MKLoader
     lateinit var novideos : TextView
+    lateinit var header_main : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +43,7 @@ class Main_video_list : AppCompatActivity() {
         MKLoader = findViewById(R.id.MKLoader)
         novideos = findViewById(R.id.novideos)
         MKLoader.visibility = View.VISIBLE
+        header_main = findViewById(R.id.header_main)
 
         ic_option = findViewById(R.id.ic_option)
         back = findViewById(R.id.back)
@@ -50,6 +53,7 @@ class Main_video_list : AppCompatActivity() {
         recyclerview.layoutManager = layoutmanger
         adapter = videolist_adapter(this, list)
         recyclerview.adapter = adapter
+        header_main.setText(competitionname)
 
         var competitionname = intent.getStringExtra("competitionname")
 
@@ -81,8 +85,9 @@ class Main_video_list : AppCompatActivity() {
         }
 
         db = FirebaseFirestore.getInstance()
-        db.collection("competitions").document(competitionname.toString()).collection("Videos")
-            .get().addOnCompleteListener {
+        db.collection("videos").whereEqualTo("compititionname",pref.competitionname)
+            .get()
+            .addOnCompleteListener {
                 MKLoader.visibility = View.GONE
                 for (document in it.result!!.documents) {
                     Log.d("arsrgrsh", document.data.toString())
@@ -100,6 +105,8 @@ class Main_video_list : AppCompatActivity() {
                 }
                 adapter.notifyDataSetChanged()
             }
+
+
 
 
     }

@@ -20,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.tuyenmonkey.mkloader.MKLoader
 import com.webninjas.clgcompititionadmin.adapters.videolist_adapter
 import com.webninjas.clgcompititionadmin.models.videolist_model
+import com.webninjas.clgcompititionadmin.pref.competitionname
 
 class Main_video_list : AppCompatActivity() {
 
@@ -31,6 +32,7 @@ class Main_video_list : AppCompatActivity() {
     lateinit var db: FirebaseFirestore
     lateinit var MKLoader : MKLoader
     lateinit var novideos : TextView
+    lateinit var header_main : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +42,7 @@ class Main_video_list : AppCompatActivity() {
         list = ArrayList()
         MKLoader = findViewById(R.id.MKLoader)
         novideos = findViewById(R.id.novideos)
+        header_main = findViewById(R.id.header_main)
         MKLoader.visibility = View.VISIBLE
 
         ic_option = findViewById(R.id.ic_option)
@@ -51,8 +54,7 @@ class Main_video_list : AppCompatActivity() {
         adapter = videolist_adapter(this, list)
         recyclerview.adapter = adapter
 
-        var competitionname = intent.getStringExtra("competitionname")
-
+        header_main.setText(competitionname)
         back.setOnClickListener {
             finish()
         }
@@ -72,7 +74,6 @@ class Main_video_list : AppCompatActivity() {
                 Log.d("Agfasgeseg","clicked")
 //                startActivity(Intent(this@Main_video_list,add_video_activity::class.java))
                 var intent = Intent(this, get_permission::class.java)
-                intent.putExtra("competitionname",competitionname)
                 startActivity(intent)
             }
 
@@ -81,17 +82,16 @@ class Main_video_list : AppCompatActivity() {
         }
 
         db = FirebaseFirestore.getInstance()
-        db.collection("competitions").document(competitionname.toString()).collection("Videos")
-            .get().addOnCompleteListener {
+        db.collection("videos").whereEqualTo("compititionname",pref.competitionname)
+            .get()
+            .addOnCompleteListener {
                 MKLoader.visibility = View.GONE
-                Log.d("arsrgrsh", it.result.toString())
-
                 for (document in it.result!!.documents) {
                     Log.d("arsrgrsh", document.data.toString())
                     list.add(
                         videolist_model(
                             document.data?.get("url").toString(),
-                            competitionname.toString(),
+                            pref.competitionname.toString(),
                             document.id.toString(),
                             false
                         )

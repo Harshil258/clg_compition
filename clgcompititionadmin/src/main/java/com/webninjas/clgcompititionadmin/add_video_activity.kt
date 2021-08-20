@@ -35,7 +35,6 @@ class add_video_activity : AppCompatActivity() {
     var imagepath: String = ""
     lateinit var andExoPlayerView: AndExoPlayerView
     lateinit var layout: LinearLayout
-    var competitionname = ""
     lateinit var db: FirebaseFirestore
     lateinit var progressView: ProgressView
 
@@ -48,7 +47,6 @@ class add_video_activity : AppCompatActivity() {
         choosevideo = findViewById(R.id.choosevideo)
         layout = findViewById(R.id.layout)
         progressView = findViewById(R.id.progressView)
-        competitionname = intent.getStringExtra("competitionname").toString()
         andExoPlayerView = findViewById<AndExoPlayerView>(R.id.andExoPlayerView)
 
         choosevideo.setOnClickListener {
@@ -109,11 +107,12 @@ class add_video_activity : AppCompatActivity() {
 
 
     private fun uploadvideo(imagepath: String) {
+
         if (imagepath != null) {
             progressView.visibility = View.VISIBLE
             var file = Uri.fromFile(File(imagepath))
             var reference: StorageReference = FirebaseStorage.getInstance()
-                .getReference("Videos/$competitionname/${System.currentTimeMillis()}.mp4")
+                .getReference("Video/${System.currentTimeMillis()}.mp4")
 
             reference.putFile(file)
                 .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot?> {
@@ -128,30 +127,26 @@ class add_video_activity : AppCompatActivity() {
                             val data = hashMapOf(
                                 "number" to MOBILE_NO,
                                 "timestamp" to currentDateandTime,
-                                "url" to sUrl
+                                "url" to sUrl,
+                                "compititionname" to pref.competitionname
                             )
 
-                            db.collection("competitions").document(competitionname.toString())
-                                .collection("Videos").document().set(data).addOnCompleteListener {
+                            Log.d("Agagsg", pref.competitionname.toString())
+
+                            db.collection("videos").document()
+                                .set(data)
+                                .addOnCompleteListener {
                                     if (it.isSuccessful) {
-                                        db.collection("users").document(MOBILE_NO)
-                                            .collection("Videos").document().set(data)
-                                            .addOnCompleteListener {
-                                                if (it.isSuccessful) {
-                                                    progressView.visibility = View.GONE
-                                                    Toast.makeText(
-                                                        this,
-                                                        "Video Has Been Upload Successfully",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                    this.imagepath = ""
-                                                    finish()
-                                                }
-                                            }
+                                        progressView.visibility = View.GONE
+                                        Toast.makeText(
+                                            this,
+                                            "Video Has Been Upload Successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        this.imagepath = ""
+                                        finish()
                                     }
                                 }
-
-
                         }).addOnFailureListener(OnFailureListener {
                             progressView.visibility = View.GONE
                             Toast.makeText(
@@ -166,7 +161,6 @@ class add_video_activity : AppCompatActivity() {
                     progressView.progress = progress.toFloat()
                     progressView.labelText = "${progress.toInt()}%"
                 }
-
         }
     }
 

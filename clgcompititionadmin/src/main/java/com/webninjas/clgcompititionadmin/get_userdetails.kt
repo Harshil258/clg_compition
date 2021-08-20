@@ -84,6 +84,7 @@ class get_userdetails : AppCompatActivity() {
                     MKLoader.visibility = View.INVISIBLE
                     MKLoader1.visibility = View.INVISIBLE
                     startActivity(Intent(this@get_userdetails, compition_list::class.java))
+                    finish()
 
                 }else{
                     Log.d("getShareftgj", getpref(this, "CLG_NAME").toString())
@@ -147,6 +148,7 @@ class get_userdetails : AppCompatActivity() {
                                             "DATA is ADDED",
                                             Toast.LENGTH_SHORT
                                         )
+                                        finish()
                                     } else if (it.isCanceled) {
                                         MKLoader.visibility = View.INVISIBLE
                                         Toast.makeText(
