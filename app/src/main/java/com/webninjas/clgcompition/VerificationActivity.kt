@@ -10,7 +10,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
@@ -41,7 +40,7 @@ class VerificationActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         numbershow.text = pref.MOBILE_NO
-        sendVerificationCode();
+        sendVerificationCode()
 
         verify.setOnClickListener {
             if (TextUtils.isEmpty(enterotp.text.toString())) {
@@ -114,19 +113,19 @@ class VerificationActivity : AppCompatActivity() {
                         db.collection("users").document(pref.MOBILE_NO.toString())
 
                     docref.addSnapshotListener { value, error ->
-                        Log.d("ersagwrgaerg",value.toString())
+                        Log.d("ersagwrgaerg", value.toString())
                         if (value?.exists() == true) {
                             startActivity(
                                 Intent(
                                     this@VerificationActivity,
-                                    compition_list::class.java
+                                    get_userdetails::class.java
                                 )
                             )
                             finish()
                         } else {
 
 //                            MOBILE_NO = number.toString()
-                            var intent = Intent(this,get_userdetails::class.java)
+                            var intent = Intent(this, get_userdetails::class.java)
                             startActivity(intent)
 //                            startActivity(
 //                                Intent(

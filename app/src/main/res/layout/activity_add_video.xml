@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".add_video_activity">
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/progressView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.potyvideo.library.AndExoPlayerView
+            android:id="@+id/andExoPlayerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:andexo_aspect_ratio="aspect_match"
+            app:andexo_play_when_ready="true"
+            app:andexo_show_controller="true"
+            app:andexo_resize_mode="Fit" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/choosevideo"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_back"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="Choose Video"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:theme="@style/textbacktheme"
+        app:layout_constraintBottom_toTopOf="@+id/progressView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.skydoves.progressview.ProgressView
+        android:id="@+id/progressView"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:theme="@style/Theme.AppCompat"
+        app:layout_constraintBottom_toTopOf="@+id/upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:progressView_autoAnimate="true"
+        app:progressView_colorProgress="@color/purple_200"
+        app:progressView_labelSize="13sp"
+        app:progressView_labelSpace="10dp"
+        app:progressView_labelTypeface="bold"
+        app:progressView_max="100"
+        app:progressView_min="0"
+        app:progressView_padding="1dp"
+        app:progressView_progress="0"
+        app:progressView_progressFromPrevious="true"
+        app:progressView_radius="12dp" />
+
+    <TextView
+        android:id="@+id/upload"
+        android:layout_width="150dp"
+        android:layout_margin="20dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="Upload"
+        android:background="@drawable/button_back"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:theme="@style/textbacktheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

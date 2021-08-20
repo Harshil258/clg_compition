@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="20dp"
+    android:layout_margin="10dp"
     app:cardCornerRadius="10dp"
     app:cardElevation="20dp"
     android:background="@color/purple_200"
@@ -15,24 +15,15 @@
         android:background="@color/purple_200"
         android:layout_height="wrap_content">
 
-        <VideoView
-            android:id="@+id/videoview"
-            android:layout_width="wrap_content"
-            android:layout_height="350dp"
+        <ImageView
+            android:id="@+id/ImageView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="fitXY"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/like"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:padding="10dp"
-            android:src="@drawable/ic_notliked"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/videoview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

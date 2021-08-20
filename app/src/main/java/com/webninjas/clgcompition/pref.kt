@@ -10,6 +10,10 @@ object pref {
     var ROLL_NO : String = ""
     var MOBILE_NO : String = ""
     var CLASSNAME : String = ""
+    var CLG_NAME : String = ""
+    var getpermiossion : String = ""
+
+
 
     fun setpref(context: Context, key: String, value: String) {
         val sharedPrefFile = "kotlinsharedpreference"

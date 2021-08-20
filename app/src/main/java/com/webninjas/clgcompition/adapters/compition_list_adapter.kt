@@ -83,7 +83,6 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
                         if (progress.toFloat().toInt() == 100){
                             holder.progressView1.labelText = "Competition is Over"
                         }
-
                     }
                     override fun onFinish() {
 
@@ -102,7 +101,6 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
             }
         }
 
-
         holder.categoriitem.setOnClickListener {
             var intent = Intent(context, Main_video_list::class.java)
             intent.putExtra("competitionname",datalist[position].competition_name)
@@ -113,7 +111,6 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
     override fun getItemCount(): Int {
         return datalist.size
     }
-
 
     class compitionholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

@@ -4,16 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".get_userdetails">
+    tools:context=".Profile_activity">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:maxHeight="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:paddingBottom="3dp"
+                android:src="@drawable/ic_baseline_arrow_back_ios_new_24"
+                android:theme="@style/iconcolor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/header_main"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:text="YOUR PROFILE"
+                android:textAlignment="viewStart"
+                android:textAllCaps="true"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:theme="@style/texttheme"
+                app:layout_constraintStart_toEndOf="@+id/back"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="RtlCompat" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
 
         <LinearLayout
@@ -96,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
                     android:padding="10dp"
-                    android:text="Enter Full Name here :"
+                    android:text="Full Name :"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:theme="@style/texttheme"
@@ -105,7 +151,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-                <EditText
+                <TextView
                     android:id="@+id/fullname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -117,6 +163,7 @@
                     android:inputType="textAutoCorrect"
                     android:padding="10dp"
                     android:selectAllOnFocus="false"
+                    android:textAlignment="center"
                     android:textColor="@color/purple_200"
                     android:textIsSelectable="false"
                     android:textSize="20sp"
@@ -143,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
                     android:padding="10dp"
-                    android:text="Enter Class Name here :"
+                    android:text="Class Name :"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:theme="@style/texttheme"
@@ -152,7 +199,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-                <EditText
+                <TextView
                     android:id="@+id/classname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -164,6 +211,7 @@
                     android:inputType="textAutoCorrect"
                     android:padding="10dp"
                     android:selectAllOnFocus="false"
+                    android:textAlignment="center"
                     android:textColor="@color/purple_200"
                     android:textIsSelectable="false"
                     android:textSize="20sp"
@@ -190,7 +238,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
                     android:padding="10dp"
-                    android:text="Enter College Name here :"
+                    android:text="College Name :"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:theme="@style/texttheme"
@@ -199,7 +247,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-                <EditText
+                <TextView
                     android:id="@+id/CLG_NAME"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -211,6 +259,7 @@
                     android:inputType="textAutoCorrect"
                     android:padding="10dp"
                     android:selectAllOnFocus="false"
+                    android:textAlignment="center"
                     android:textColor="@color/purple_200"
                     android:textIsSelectable="false"
                     android:textSize="20sp"
@@ -238,7 +287,7 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.8"
                     android:padding="10dp"
-                    android:text="Enter Roll No :"
+                    android:text="Roll No :"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:theme="@style/texttheme"
@@ -247,7 +296,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-                <EditText
+                <TextView
                     android:id="@+id/rollno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -259,6 +308,7 @@
                     android:inputType="phone"
                     android:padding="10dp"
                     android:selectAllOnFocus="false"
+                    android:textAlignment="center"
                     android:textColor="@color/purple_200"
                     android:textIsSelectable="false"
                     android:textSize="20sp"
@@ -271,51 +321,8 @@
 
             </LinearLayout>
 
-            <com.tuyenmonkey.mkloader.MKLoader
-                android:id="@+id/MKLoader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/progressbastheme"
-                android:visibility="gone"
-                app:mk_type="Worm" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <Button
-                    android:id="@+id/submit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_back"
-                    android:text="Submit"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.463"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </ScrollView>
-
-
-    <com.tuyenmonkey.mkloader.MKLoader
-        android:id="@+id/MKLoader1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:theme="@style/progressbastheme"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:mk_type="Worm" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
