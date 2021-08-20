@@ -42,7 +42,6 @@ class get_permission : AppCompatActivity() {
                     if (value.result?.child("getpermiossion")?.value.toString() == "true") {
                         MKLoader.visibility = View.INVISIBLE
                         var intent = Intent(this, add_video_activity::class.java)
-                        intent.putExtra("competitionname", intent.getStringExtra("competitionname"))
                         startActivity(intent)
                         finish()
 

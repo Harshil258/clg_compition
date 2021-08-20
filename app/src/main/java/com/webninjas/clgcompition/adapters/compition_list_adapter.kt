@@ -2,6 +2,7 @@ package com.webninjas.clgcompition.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.opengl.Visibility
 import android.os.CountDownTimer
 import android.util.Log
@@ -11,15 +12,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.skydoves.progressview.ProgressView
 import com.skydoves.progressview.progressView
+import com.tuyenmonkey.mkloader.MKLoader
 import com.webninjas.clgcompition.Main_video_list
 import com.webninjas.clgcompition.R
 import com.webninjas.clgcompition.models.competitions_model
+import com.webninjas.clgcompition.pref.competitionname
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -41,7 +49,31 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
     override fun onBindViewHolder(holder: compitionholder, position: Int) {
 
         holder.categori_name.text = datalist[position].competition_name
-        Glide.with(context).load(datalist[position].logourl).into(holder.logo)
+        Glide.with(context).load(datalist[position].logourl)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.MKLoader.visibility = View.GONE
+                    Toast.makeText(context,"Something went Wrong...", Toast.LENGTH_SHORT).show()
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    holder.MKLoader.visibility = View.GONE
+                    return false
+                }
+
+            }).into(holder.logo)
 
 
         val simpleDateFormat = SimpleDateFormat("hh:mm a")
@@ -103,6 +135,7 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
 
         holder.categoriitem.setOnClickListener {
             var intent = Intent(context, Main_video_list::class.java)
+            competitionname = datalist[position].competition_name
             intent.putExtra("competitionname",datalist[position].competition_name)
             context.startActivity(intent)
         }
@@ -119,6 +152,7 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
         var categoriitem: CardView = itemView.findViewById(R.id.categoriitem)
         var progressView1: ProgressView = itemView.findViewById(R.id.progressView1)
         var constraintLayout2: ConstraintLayout = itemView.findViewById(R.id.constraintLayout2)
+        var MKLoader: MKLoader = itemView.findViewById(R.id.MKLoader)
 
     }
 }

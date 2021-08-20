@@ -72,7 +72,7 @@ class Main_video_list : AppCompatActivity() {
                 Log.d("Agfasgeseg","clicked")
 //                startActivity(Intent(this@Main_video_list,add_video_activity::class.java))
                 var intent = Intent(this, get_permission::class.java)
-                intent.putExtra("competitionname",competitionname)
+                intent.putExtra("competitionname", pref.competitionname)
                 startActivity(intent)
             }
 

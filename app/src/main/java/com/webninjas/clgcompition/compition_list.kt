@@ -2,7 +2,6 @@ package com.webninjas.clgcompition
 
 import android.app.Dialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,16 +9,16 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tuyenmonkey.mkloader.MKLoader
 import com.webninjas.clgcompition.adapters.compition_list_adapter
 import com.webninjas.clgcompition.models.competitions_model
+import com.webninjas.clgcompition.pref.MOBILE_NO
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,14 +26,14 @@ import kotlin.collections.ArrayList
 
 class compition_list : AppCompatActivity() {
 
-    lateinit var db : FirebaseFirestore
+    lateinit var db: FirebaseFirestore
 
     lateinit var adapter: compition_list_adapter
     lateinit var list: ArrayList<competitions_model>
     lateinit var recyclerview: RecyclerView
-    lateinit var MKLoader : MKLoader
-    lateinit var ic_option : ImageView
-    lateinit var nocompitition : TextView
+    lateinit var MKLoader: MKLoader
+    lateinit var ic_option: ImageView
+    lateinit var nocompitition: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +82,7 @@ class compition_list : AppCompatActivity() {
                 pref.CLASSNAME = pref.getpref(this, "CLASSNAME").toString()
                 pref.CLG_NAME = pref.getpref(this, "CLG_NAME").toString()
 
-                Toast.makeText(this,"You are sign out",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "You are sign out", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
@@ -100,20 +99,36 @@ class compition_list : AppCompatActivity() {
 
         }
 
+        db.collection("competitions").document("drawing").collection("Videos")
+            .whereEqualTo("number", MOBILE_NO).get()
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.d("sghsrhgsrfhdsh", it.result?.documents.toString())
+                } else {
+                    Log.d("sghsrhgsrfhdsh", it.exception.toString())
+                }
+            }
+
         db.collection("competitions").get().addOnCompleteListener {
-            if (it.isSuccessful){
+            if (it.isSuccessful) {
 //                Log.d("sedgsggsrg", it.result!!.documents.toString())
                 for (document in it.result!!) {
 
-                    Log.d("sedgsgdxrhgsrg", document.id + " => " + document.data.get("starttime").toString())
+                    Log.d(
+                        "sedgsgdxrhgsrg",
+                        document.id + " => " + document.data.get("starttime").toString()
+                    )
 
 
-                    list.add(competitions_model(document.id,
-                        document.data.get("PHOTO_URL").toString(),
-                        document.data.get("starttime").toString(),
-                        document.data.get("endtime").toString(),
-                        document.data.get("DATE").toString()
-                    ))
+                    list.add(
+                        competitions_model(
+                            document.id,
+                            document.data.get("logourl").toString(),
+                            document.data.get("starttime").toString(),
+                            document.data.get("endtime").toString(),
+                            document.data.get("DATE").toString()
+                        )
+                    )
 
                     val currentTime: String =
                         SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())
@@ -122,7 +137,7 @@ class compition_list : AppCompatActivity() {
                 }
                 MKLoader.visibility = View.GONE
 
-                if (list.size == 0){
+                if (list.size == 0) {
                     nocompitition.visibility = View.VISIBLE
                 }
                 adapter.notifyDataSetChanged()

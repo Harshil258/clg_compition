@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "clg compition"
 include ':app'
+include ':clgcompititionadmin'

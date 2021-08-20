@@ -26,16 +26,13 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import com.potyvideo.library.AndExoPlayerView
 
-
 class add_video_activity : AppCompatActivity() {
-
 
     lateinit var upload: TextView
     lateinit var choosevideo: TextView
     var imagepath: String = ""
     lateinit var andExoPlayerView: AndExoPlayerView
     lateinit var layout: LinearLayout
-    var competitionname = ""
     lateinit var db: FirebaseFirestore
     lateinit var progressView: ProgressView
 
@@ -48,8 +45,9 @@ class add_video_activity : AppCompatActivity() {
         choosevideo = findViewById(R.id.choosevideo)
         layout = findViewById(R.id.layout)
         progressView = findViewById(R.id.progressView)
-        competitionname = intent.getStringExtra("competitionname").toString()
         andExoPlayerView = findViewById<AndExoPlayerView>(R.id.andExoPlayerView)
+
+        Log.d("Agagsg", pref.competitionname.toString())
 
         choosevideo.setOnClickListener {
 
@@ -107,13 +105,12 @@ class add_video_activity : AppCompatActivity() {
         andExoPlayerView.releasePlayer()
     }
 
-
     private fun uploadvideo(imagepath: String) {
         if (imagepath != null) {
             progressView.visibility = View.VISIBLE
             var file = Uri.fromFile(File(imagepath))
             var reference: StorageReference = FirebaseStorage.getInstance()
-                .getReference("Videos/$competitionname/${System.currentTimeMillis()}.mp4")
+                .getReference("Videos/${pref.competitionname}/${System.currentTimeMillis()}.mp4")
 
             reference.putFile(file)
                 .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot?> {
@@ -131,7 +128,9 @@ class add_video_activity : AppCompatActivity() {
                                 "url" to sUrl
                             )
 
-                            db.collection("competitions").document(competitionname.toString())
+                            Log.d("Agagsg", pref.competitionname.toString())
+
+                            db.collection("competitions").document(pref.competitionname.toString())
                                 .collection("Videos").document().set(data).addOnCompleteListener {
                                     if (it.isSuccessful) {
                                         db.collection("users").document(MOBILE_NO)
@@ -166,7 +165,6 @@ class add_video_activity : AppCompatActivity() {
                     progressView.progress = progress.toFloat()
                     progressView.labelText = "${progress.toInt()}%"
                 }
-
         }
     }
 
