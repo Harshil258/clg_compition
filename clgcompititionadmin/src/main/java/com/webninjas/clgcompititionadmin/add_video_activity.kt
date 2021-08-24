@@ -26,9 +26,7 @@ import java.util.concurrent.TimeUnit
 import com.potyvideo.library.AndExoPlayerView
 import com.webninjas.clgcompititionadmin.pref.MOBILE_NO
 
-
 class add_video_activity : AppCompatActivity() {
-
 
     lateinit var upload: TextView
     lateinit var choosevideo: TextView
@@ -37,6 +35,7 @@ class add_video_activity : AppCompatActivity() {
     lateinit var layout: LinearLayout
     lateinit var db: FirebaseFirestore
     lateinit var progressView: ProgressView
+    var videoname = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +47,8 @@ class add_video_activity : AppCompatActivity() {
         layout = findViewById(R.id.layout)
         progressView = findViewById(R.id.progressView)
         andExoPlayerView = findViewById<AndExoPlayerView>(R.id.andExoPlayerView)
+
+        Log.d("Agagsg", pref.competitionname.toString())
 
         choosevideo.setOnClickListener {
 
@@ -77,42 +78,14 @@ class add_video_activity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == 3000) {
-            val list = EasyVideoPicker.getSelectedVideos(data)  //ArrayList<VideoModel>
-            choosevideo.visibility = View.GONE
-            imagepath = list?.get(0)?.videoPath.toString()
-
-            layout.visibility = View.VISIBLE
-
-            andExoPlayerView.setSource(imagepath)
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        andExoPlayerView.stopPlayer()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        andExoPlayerView.startPlayer()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        andExoPlayerView.releasePlayer()
-    }
-
-
     private fun uploadvideo(imagepath: String) {
 
         if (imagepath != null) {
             progressView.visibility = View.VISIBLE
             var file = Uri.fromFile(File(imagepath))
+            videoname = "${System.currentTimeMillis()}.mp4"
             var reference: StorageReference = FirebaseStorage.getInstance()
-                .getReference("Video/${System.currentTimeMillis()}.mp4")
+                .getReference("Video/${videoname}")
 
             reference.putFile(file)
                 .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot?> {
@@ -128,7 +101,8 @@ class add_video_activity : AppCompatActivity() {
                                 "number" to MOBILE_NO,
                                 "timestamp" to currentDateandTime,
                                 "url" to sUrl,
-                                "compititionname" to pref.competitionname
+                                "compititionname" to pref.competitionname,
+                                "videoname" to videoname
                             )
 
                             Log.d("Agagsg", pref.competitionname.toString())
@@ -163,6 +137,35 @@ class add_video_activity : AppCompatActivity() {
                 }
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == 3000) {
+            val list = EasyVideoPicker.getSelectedVideos(data)  //ArrayList<VideoModel>
+            choosevideo.visibility = View.GONE
+            imagepath = list?.get(0)?.videoPath.toString()
+
+            layout.visibility = View.VISIBLE
+
+            andExoPlayerView.setSource(imagepath)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        andExoPlayerView.stopPlayer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        andExoPlayerView.startPlayer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        andExoPlayerView.releasePlayer()
+    }
+
 
 
 }

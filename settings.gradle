@@ -7,6 +7,6 @@ dependencyResolutionManagement {
         maven { url 'https://jitpack.io' }
     }
 }
-rootProject.name = "clg compition"
+rootProject.name = "College Competition"
 include ':app'
 include ':clgcompititionadmin'

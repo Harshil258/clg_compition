@@ -1,22 +1,30 @@
 package com.webninjas.clgcompition
 
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.*
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
+import android.widget.VideoView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.potyvideo.library.AndExoPlayerView
+import com.webninjas.clgcompition.pref.MOBILE_NO
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
 class Video_open_Activity : AppCompatActivity() {
 
-    lateinit var layout : LinearLayout
-    lateinit var like : ImageView
+    lateinit var layout: LinearLayout
+    lateinit var like: ImageView
+    lateinit var delete: ImageView
     var isliked = false
     var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+
     lateinit var videoplayer: VideoView
     lateinit var andExoPlayerView: AndExoPlayerView
 
@@ -27,19 +35,60 @@ class Video_open_Activity : AppCompatActivity() {
 
         layout = findViewById(R.id.layout)
         like = findViewById(R.id.like)
-//        videoplayer = findViewById(R.id.videoplayer)
+        delete = findViewById(R.id.delete)
 
         var videourl = intent.getStringExtra("videourl").toString()
         var documentid = intent.getStringExtra("documentid").toString()
         var compititionname = intent.getStringExtra("compititionname").toString()
+        var number = intent.getStringExtra("number").toString()
+        var videoname = intent.getStringExtra("videoname").toString()
         andExoPlayerView = findViewById<AndExoPlayerView>(R.id.andExoPlayerView)
         andExoPlayerView.setSource(videourl)
+
+        Log.d("edgwsg",number + "ergherhteh")
+        Log.d("edgwsg",videoname)
+        Log.d("edgwsg",compititionname)
+        Log.d("edgwsg",documentid)
+
+        if (number == MOBILE_NO) {
+            Log.d("edgwsg", "activated")
+            delete.visibility = View.VISIBLE
+            delete.setOnClickListener {
+
+                var reference: StorageReference = FirebaseStorage.getInstance()
+                    .getReference("Video/${videoname}")
+
+                reference.delete().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        db.collection("videos").document(documentid).delete()
+                            .addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    Toast.makeText(
+                                        this,
+                                        "Video Deleted Sucessfully",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    finish()
+                                }
+                            }
+                    } else {
+
+                    }
+                }
+
+
+            }
+
+        }
 
         setlikes(compititionname, documentid)
 
         like.setOnClickListener {
-            managelike(compititionname,documentid)
+            managelike(compititionname, documentid)
         }
+
+
+
 
 
     }

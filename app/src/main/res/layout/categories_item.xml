@@ -27,6 +27,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/noimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:largeHeap="true"
+            android:visibility="gone"
+            android:src="@drawable/ic_icons8_no_image_100"
+            app:layout_constraintBottom_toTopOf="@+id/categori_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
         <TextView
             android:id="@+id/categori_name"
             android:layout_width="match_parent"

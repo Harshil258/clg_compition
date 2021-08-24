@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tuyenmonkey.mkloader.MKLoader
 import com.webninjas.clgcompition.adapters.videolist_adapter
@@ -33,6 +34,8 @@ class Main_video_list : AppCompatActivity() {
     lateinit var MKLoader : MKLoader
     lateinit var novideos : TextView
     lateinit var header_main : TextView
+    lateinit var swipetorefresh : SwipeRefreshLayout
+    lateinit var dialog : Dialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +47,8 @@ class Main_video_list : AppCompatActivity() {
         novideos = findViewById(R.id.novideos)
         MKLoader.visibility = View.VISIBLE
         header_main = findViewById(R.id.header_main)
+        swipetorefresh = findViewById(R.id.swipetorefresh)
+        dialog = Dialog(this,R.style.Theme_AppCompat_DayNight_Dialog)
 
         ic_option = findViewById(R.id.ic_option)
         back = findViewById(R.id.back)
@@ -61,14 +66,23 @@ class Main_video_list : AppCompatActivity() {
             finish()
         }
 
+        swipetorefresh.setOnRefreshListener {
+            getdata()
+            swipetorefresh.isRefreshing  = false
+        }
+        getdata()
+
         ic_option.setOnClickListener {
 
             MKLoader.visibility = View.GONE
 
-            var dialog = Dialog(this)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.setContentView(R.layout.videolist_menu)
+            val inflater = LayoutInflater.from(this)
+            val view = inflater.inflate(R.layout.videolist_menu, null, false)
+            dialog.setTitle(null)
+            dialog.setCancelable(true)
+
+            dialog.setContentView(view)
+
 
             var addvideos = dialog.findViewById<CardView>(R.id.addvideos)
 
@@ -84,6 +98,14 @@ class Main_video_list : AppCompatActivity() {
 
         }
 
+
+
+
+
+    }
+
+    private fun getdata() {
+        list.clear()
         db = FirebaseFirestore.getInstance()
         db.collection("videos").whereEqualTo("compititionname",pref.competitionname)
             .get()
@@ -96,18 +118,27 @@ class Main_video_list : AppCompatActivity() {
                             document.data?.get("url").toString(),
                             competitionname.toString(),
                             document.id.toString(),
-                            false
+                            false,
+                            document.data?.get("number").toString(),
+                            document.data?.get("videoname").toString()
                         )
                     )
                 }
                 if (list.size == 0){
                     novideos.visibility = View.VISIBLE
+                }else{
+                    novideos.visibility = View.GONE
+
                 }
                 adapter.notifyDataSetChanged()
             }
 
+    }
 
-
-
+    override fun onPause() {
+        super.onPause()
+        if (dialog != null && dialog.isShowing) {
+            dialog.dismiss()
+        }
     }
 }

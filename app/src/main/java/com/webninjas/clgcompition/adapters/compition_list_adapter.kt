@@ -58,7 +58,7 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
                     isFirstResource: Boolean
                 ): Boolean {
                     holder.MKLoader.visibility = View.GONE
-                    Toast.makeText(context,"Something went Wrong...", Toast.LENGTH_SHORT).show()
+                    holder.noimage.visibility - View.VISIBLE
                     return false
                 }
 
@@ -69,11 +69,12 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
                     dataSource: DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
+                    holder.noimage.visibility - View.GONE
                     holder.MKLoader.visibility = View.GONE
                     return false
                 }
 
-            }).into(holder.logo)
+            }).placeholder(R.drawable.ic_icons8_no_image_100).into(holder.logo)
 
 
         val simpleDateFormat = SimpleDateFormat("hh:mm a")
@@ -153,6 +154,7 @@ public class compition_list_adapter(var context: Context, list: ArrayList<compet
         var progressView1: ProgressView = itemView.findViewById(R.id.progressView1)
         var constraintLayout2: ConstraintLayout = itemView.findViewById(R.id.constraintLayout2)
         var MKLoader: MKLoader = itemView.findViewById(R.id.MKLoader)
+        var noimage: ImageView = itemView.findViewById(R.id.noimage)
 
     }
 }

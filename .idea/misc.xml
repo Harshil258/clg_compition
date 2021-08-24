@@ -3,35 +3,56 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1824074074074074" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/button_back.xml" value="0.15462962962962962" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/cardback.xml" value="0.19375" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/delete.xml" value="0.18703703703703703" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/edittext_back.xml" value="0.15462962962962962" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.1787037037037037" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/ic_launcher_background.xml" value="0.18333333333333332" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/ic_liked.xml" value="0.19375" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/ic_line.xml" value="0.19375" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/ic_notliked.xml" value="0.19375" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_add_video.xml" value="0.12571428571428572" />
-        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_compition_list.xml" value="0.14285714285714285" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_choose.xml" value="0.16530797101449277" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_compition_list.xml" value="0.10285714285714286" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_get_permission.xml" value="0.14285714285714285" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_get_userdetails.xml" value="0.14285714285714285" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_main.xml" value="0.12571428571428572" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_main_video_list.xml" value="0.14285714285714285" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_my_videos.xml" value="0.16530797101449277" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_profile.xml" value="0.16354166666666667" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_spalsh.xml" value="0.12571428571428572" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_verification.xml" value="0.18857142857142858" />
-        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_video_open.xml" value="0.17760416666666667" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/activity_video_open.xml" value="0.10285714285714286" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/categories_item.xml" value="0.12571428571428572" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/mk_player.xml" value="0.17760416666666667" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/video_item.xml" value="0.1142857142857143" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/videolist_menu.xml" value="0.1142857142857143" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18333333333333332" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/drawable-v24/delete.xml" value="0.18333333333333332" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19375" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/drawable/button_back.xml" value="0.18333333333333332" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.1787037037037037" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/drawable/ic_launcher_background.xml" value="0.18333333333333332" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_add_video.xml" value="0.17760416666666667" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_addcompitition.xml" value="0.12571428571428572" />
-        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_compition_list.xml" value="0.17760416666666667" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_choose.xml" value="0.16032608695652173" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_compition_list.xml" value="0.10285714285714286" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_get_permission.xml" value="0.17760416666666667" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_get_userdetails.xml" value="0.1" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_give_permission.xml" value="0.12571428571428572" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_main_video_list.xml" value="0.16530797101449277" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_my_videos.xml" value="0.16032608695652173" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_profile.xml" value="0.16032608695652173" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_spalsh.xml" value="0.15489130434782608" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_video_open.xml" value="0.16032608695652173" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_winner.xml" value="0.15489130434782608" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/categories_item.xml" value="0.16032608695652173" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/permission_layout.xml" value="0.16032608695652173" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/video_item.xml" value="0.17527173913043478" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/videolist_menu.xml" value="0.17760416666666667" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18333333333333332" />
       </map>
     </option>
   </component>

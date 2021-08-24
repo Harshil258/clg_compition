@@ -35,6 +35,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/noimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:largeHeap="true"
+            android:src="@drawable/ic_icons8_no_image_100"
+            app:layout_constraintBottom_toBottomOf="@+id/ImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

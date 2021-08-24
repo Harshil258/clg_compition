@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
@@ -34,6 +35,86 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/noimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:largeHeap="true"
+            android:src="@drawable/ic_icons8_no_image_100"
+            app:layout_constraintBottom_toBottomOf="@+id/ImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ImageView">
+
+            <TextView
+                android:id="@+id/likes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Likes"
+                android:textAlignment="center"
+                android:textSize="25sp"
+                android:theme="@style/texttheme" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="2"
+                    android:text="Name"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:theme="@style/texttheme" />
+
+                <TextView
+                    android:id="@+id/rollno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:text="roll no"
+                    android:textAlignment="center"
+                    android:textSize="25sp"
+                    android:theme="@style/texttheme" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/clgname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:text="clgname"
+                android:textAlignment="center"
+                android:textSize="25sp"
+                android:theme="@style/texttheme" />
+
+
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

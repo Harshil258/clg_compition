@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -19,7 +18,6 @@ import com.tuyenmonkey.mkloader.MKLoader
 import com.webninjas.clgcompition.R
 import com.webninjas.clgcompition.Video_open_Activity
 import com.webninjas.clgcompition.models.videolist_model
-import java.util.*
 
 
 class videolist_adapter(var context: Context, var list: List<videolist_model>) :
@@ -43,7 +41,7 @@ class videolist_adapter(var context: Context, var list: List<videolist_model>) :
 //        setlikes(list[position].compititionname, position, holder)
 
         Glide.with(context).load(list[position].videourl)
-            .listener(object : RequestListener<Drawable>{
+            .listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
@@ -51,7 +49,7 @@ class videolist_adapter(var context: Context, var list: List<videolist_model>) :
                     isFirstResource: Boolean
                 ): Boolean {
                     holder.MKLoader.visibility = View.GONE
-                    Toast.makeText(context,"Something went Wrong...",Toast.LENGTH_SHORT).show()
+                    holder.noimage.visibility - View.VISIBLE
                     return false
                 }
 
@@ -62,11 +60,12 @@ class videolist_adapter(var context: Context, var list: List<videolist_model>) :
                     dataSource: DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
+                    holder.noimage.visibility - View.GONE
                     holder.MKLoader.visibility = View.GONE
                     return false
                 }
 
-            }).into(holder.ImageView)
+            }).placeholder(R.drawable.ic_icons8_no_image_100).into(holder.ImageView)
 
 
         holder.ImageView.setOnClickListener {
@@ -74,6 +73,8 @@ class videolist_adapter(var context: Context, var list: List<videolist_model>) :
             intent.putExtra("videourl", list[position].videourl)
             intent.putExtra("documentid", list[position].documentid)
             intent.putExtra("compititionname", list[position].compititionname)
+            intent.putExtra("number", list[position].number)
+            intent.putExtra("videoname", list[position].videoname)
             context.startActivity(intent)
         }
 
@@ -89,6 +90,7 @@ class videolist_adapter(var context: Context, var list: List<videolist_model>) :
 
     class videolist_holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var ImageView: ImageView = itemView.findViewById(R.id.ImageView)
+        var noimage: ImageView = itemView.findViewById(R.id.noimage)
         var MKLoader: MKLoader = itemView.findViewById(R.id.MKLoader)
 
     }

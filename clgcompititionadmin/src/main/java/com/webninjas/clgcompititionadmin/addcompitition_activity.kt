@@ -6,10 +6,18 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.AuthFailureError
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
 import com.google.firebase.firestore.FirebaseFirestore
+import org.json.JSONException
+import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.xml.transform.ErrorListener
+import javax.xml.transform.TransformerException
 
 class addcompitition_activity : AppCompatActivity() {
 
@@ -24,6 +32,11 @@ class addcompitition_activity : AppCompatActivity() {
     var date: String = ""
 
     lateinit var db: FirebaseFirestore
+
+    private val FCM_API = "https://fcm.googleapis.com/fcm/send"
+    private val serverKey =
+        "key=" + "AAAAzH5Qmss:APA91bEYcmYaL5qHxFh-qUM26eIP_U_8M2AMIqvnjj67xTBTsvjxskND-yQg5W_ZeCiECfSzyUDc_U01wifurDpEz0JygYBdaPAt5ZbXfvxT3M63zk9pOyUN32xpWE-AlYAWhA0QzTUq"
+    private val contentType = "application/json"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +88,30 @@ class addcompitition_activity : AppCompatActivity() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(this, "Done!!!", Toast.LENGTH_SHORT).show()
+                            var TOPIC =
+                                "/topics/COMMON" //topic has to match what the receiver subscribed to
+
+                            val notification = JSONObject()
+                            val notifcationBody = JSONObject()
+                            try {
+                                notifcationBody.put(
+                                    "title",
+                                    "New Competition is here..."
+                                )
+                                notifcationBody.put(
+                                    "message",
+                                    "participate in the ${competition_name.text.toString()}"
+                                )
+                                notifcationBody.put(
+                                    "logourl",
+                                    logourl.text.toString()
+                                )
+                                notification.put("to", TOPIC)
+                                notification.put("data", notifcationBody)
+                            } catch (e: JSONException) {
+                                Log.e("TAG", "onCreate: " + e.message)
+                            }
+                            sendNotification(notification)
                             finish()
                         } else {
                             Toast.makeText(this, "Something went wrong!!!", Toast.LENGTH_SHORT)
@@ -84,6 +121,43 @@ class addcompitition_activity : AppCompatActivity() {
             }
         }
     }
+
+    private fun sendNotification(notification: JSONObject) {
+        val jsonObjectRequest: JsonObjectRequest = object : JsonObjectRequest(FCM_API, notification,
+            Response.Listener<JSONObject?> { response ->
+                Log.i("suces", "onResponse: $response")
+                Toast.makeText(this, "Notification is on the way...", Toast.LENGTH_SHORT)
+                    .show()
+            },
+            object : ErrorListener, Response.ErrorListener {
+                override fun onErrorResponse(error: VolleyError?) {
+                    Toast.makeText(this@addcompitition_activity, "Request error", Toast.LENGTH_LONG).show()
+                    Log.i("TAG", "onErrorResponse: Didn't work")
+                }
+
+                override fun warning(p0: TransformerException?) {
+                    Log.i("TAG", "onErrorResponse: Didn't work")
+                }
+
+                override fun error(p0: TransformerException?) {
+                    Log.i("TAG", "onErrorResponse: Didn't work")
+                }
+
+                override fun fatalError(p0: TransformerException?) {
+                    Log.i("TAG", "onErrorResponse: Didn't work")
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String>? {
+                val params: MutableMap<String, String> = HashMap()
+                params["Authorization"] = serverKey
+                params["Content-Type"] = contentType
+                return params
+            }
+        }
+        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest)
+    }
+
 
     private fun datepicker() {
         val calendar: Calendar = Calendar.getInstance()

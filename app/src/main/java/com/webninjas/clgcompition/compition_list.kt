@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.Window
 import android.widget.ImageView
@@ -13,8 +14,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.messaging.FirebaseMessaging
 import com.tuyenmonkey.mkloader.MKLoader
 import com.webninjas.clgcompition.adapters.compition_list_adapter
 import com.webninjas.clgcompition.models.competitions_model
@@ -34,37 +37,51 @@ class compition_list : AppCompatActivity() {
     lateinit var MKLoader: MKLoader
     lateinit var ic_option: ImageView
     lateinit var nocompitition: TextView
+    lateinit var swipetorefresh: SwipeRefreshLayout
+    lateinit var dialog : Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compition_list)
         list = ArrayList()
+        FirebaseMessaging.getInstance().subscribeToTopic("COMMON")
+        FirebaseMessaging.getInstance().subscribeToTopic(MOBILE_NO)
+        dialog = Dialog(this,R.style.ThemeOverlay_MaterialComponents_Dialog)
 
         db = FirebaseFirestore.getInstance()
         MKLoader = findViewById(R.id.MKLoader)
         nocompitition = findViewById(R.id.nocompitition)
         MKLoader.visibility = View.VISIBLE
         ic_option = findViewById(R.id.ic_option)
+        swipetorefresh = findViewById(R.id.swipetorefresh)
 
         recyclerview = findViewById(R.id.recyclerview)
         var layoutmanger = LinearLayoutManager(this)
         recyclerview.layoutManager = layoutmanger
         adapter = compition_list_adapter(this, list)
         recyclerview.adapter = adapter
+        swipetorefresh.setOnRefreshListener {
+            getdata()
+            swipetorefresh.isRefreshing = false
+        }
+        getdata()
 
 
         ic_option.setOnClickListener {
 
             MKLoader.visibility = View.GONE
 
-            var dialog = Dialog(this)
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.window!!.setBackgroundDrawableResource(android.R.color.transparent)
-            dialog.setContentView(R.layout.videolist_menu)
+            val inflater = LayoutInflater.from(this)
+            val view = inflater.inflate(R.layout.videolist_menu, null, false)
+            dialog.setTitle(null)
+            dialog.setCancelable(true)
+            dialog.setContentView(view)
 
             var addvideos = dialog.findViewById<CardView>(R.id.addvideos)
             var profile = dialog.findViewById<CardView>(R.id.profile)
             var LOGOUT = dialog.findViewById<CardView>(R.id.LOGOUT)
+
+
 
             addvideos.visibility = View.GONE
             profile.visibility = View.VISIBLE
@@ -109,6 +126,11 @@ class compition_list : AppCompatActivity() {
                 }
             }
 
+
+    }
+
+    private fun getdata() {
+        list.clear()
         db.collection("competitions").get().addOnCompleteListener {
             if (it.isSuccessful) {
 //                Log.d("sedgsggsrg", it.result!!.documents.toString())
@@ -139,10 +161,18 @@ class compition_list : AppCompatActivity() {
 
                 if (list.size == 0) {
                     nocompitition.visibility = View.VISIBLE
+                }else{
+                    nocompitition.visibility = View.GONE
                 }
                 adapter.notifyDataSetChanged()
             }
         }
+    }
 
+    override fun onPause() {
+        super.onPause()
+        if (dialog != null && dialog.isShowing) {
+            dialog.dismiss()
+        }
     }
 }

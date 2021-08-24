@@ -84,9 +84,11 @@ class get_userdetails : AppCompatActivity() {
                     MKLoader.visibility = View.INVISIBLE
                     MKLoader1.visibility = View.INVISIBLE
                     startActivity(Intent(this@get_userdetails, compition_list::class.java))
+                    finish()
 
                 }else{
                     Log.d("getShareftgj", getpref(this, "CLG_NAME").toString())
+                    MKLoader1.visibility = View.GONE
 
                     mobilenumber.text = MOBILE_NO
                     submit.setOnClickListener {
@@ -142,6 +144,7 @@ class get_userdetails : AppCompatActivity() {
                                                 compition_list::class.java
                                             )
                                         )
+                                        finish()
                                         Toast.makeText(
                                             this@get_userdetails,
                                             "DATA is ADDED",

@@ -15,7 +15,6 @@ object pref {
     var competitionname = ""
 
 
-
     fun setpref(context: Context, key: String, value: String) {
         val sharedPrefFile = "kotlinsharedpreference"
         val sharedPreferences: SharedPreferences =

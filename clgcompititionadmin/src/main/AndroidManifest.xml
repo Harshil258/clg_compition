@@ -15,11 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ClgCompition">
         <activity
+            android:name="com.webninjas.winner_activity"
+            android:exported="true" />
+        <activity
+            android:name=".give_permission"
+            android:exported="true" />
+        <activity
             android:name=".addcompitition_activity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Profile_activity"
             android:exported="true" />
@@ -35,7 +41,13 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:exported="true" />
         <activity
+            android:name=".choose_activity"
+            android:exported="true" />
+        <activity
             android:name=".compition_list"
+            android:exported="true" />
+        <activity
+            android:name=".my_videos"
             android:exported="true" />
         <activity
             android:name=".Main_video_list"
@@ -55,6 +67,17 @@
         <activity
             android:name=".VerificationActivity"
             android:exported="true" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

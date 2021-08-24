@@ -35,6 +35,7 @@ class add_video_activity : AppCompatActivity() {
     lateinit var layout: LinearLayout
     lateinit var db: FirebaseFirestore
     lateinit var progressView: ProgressView
+    var videoname = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,8 +83,9 @@ class add_video_activity : AppCompatActivity() {
         if (imagepath != null) {
             progressView.visibility = View.VISIBLE
             var file = Uri.fromFile(File(imagepath))
+            videoname = "${System.currentTimeMillis()}.mp4"
             var reference: StorageReference = FirebaseStorage.getInstance()
-                .getReference("Video/${System.currentTimeMillis()}.mp4")
+                .getReference("Video/${videoname}")
 
             reference.putFile(file)
                 .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot?> {
@@ -99,7 +101,8 @@ class add_video_activity : AppCompatActivity() {
                                 "number" to MOBILE_NO,
                                 "timestamp" to currentDateandTime,
                                 "url" to sUrl,
-                                "compititionname" to pref.competitionname
+                                "compititionname" to pref.competitionname,
+                                "videoname" to videoname
                             )
 
                             Log.d("Agagsg", pref.competitionname.toString())
