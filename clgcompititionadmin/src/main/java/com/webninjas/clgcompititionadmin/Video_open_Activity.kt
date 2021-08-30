@@ -1,10 +1,16 @@
 package com.webninjas.clgcompititionadmin
 
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.app.ProgressDialog
+import android.os.AsyncTask
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
-import android.widget.*
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.Toast
+import android.widget.VideoView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.potyvideo.library.AndExoPlayerView
 import java.text.SimpleDateFormat
@@ -13,8 +19,9 @@ import kotlin.collections.HashMap
 
 class Video_open_Activity : AppCompatActivity() {
 
-    lateinit var layout : LinearLayout
-    lateinit var like : ImageView
+    lateinit var layout: LinearLayout
+    lateinit var like: ImageView
+    lateinit var delete: ImageView
     var isliked = false
     var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     lateinit var videoplayer: VideoView
@@ -27,11 +34,13 @@ class Video_open_Activity : AppCompatActivity() {
 
         layout = findViewById(R.id.layout)
         like = findViewById(R.id.like)
+        delete = findViewById(R.id.delete)
 //        videoplayer = findViewById(R.id.videoplayer)
 
         var videourl = intent.getStringExtra("videourl").toString()
         var documentid = intent.getStringExtra("documentid").toString()
         var compititionname = intent.getStringExtra("compititionname").toString()
+        var mobilenumber = intent.getStringExtra("mobilenumber").toString()
         andExoPlayerView = findViewById<AndExoPlayerView>(R.id.andExoPlayerView)
         andExoPlayerView.setSource(videourl)
 
@@ -39,11 +48,60 @@ class Video_open_Activity : AppCompatActivity() {
         setlikes(compititionname, documentid)
 
         like.setOnClickListener {
-            managelike(compititionname,documentid)
+            managelike(compititionname, documentid)
         }
 
+        delete.visibility = View.VISIBLE
+        delete.setOnClickListener {
+
+            deletevideo(videourl, documentid)
+
+        }
 
     }
+
+    private fun deletevideo(imageurl: String, docid: String) {
+        class deletevideo :
+            AsyncTask<Void?, Void?, String?>() {
+            var uploading: ProgressDialog? = null
+            override fun onPreExecute() {
+                super.onPreExecute()
+                uploading = ProgressDialog.show(
+                    this@Video_open_Activity,
+                    "Deleting File",
+                    "Please wait...",
+                    false,
+                    false
+                )
+            }
+
+            override fun onPostExecute(s: String?) {
+                super.onPostExecute(s)
+
+                db.collection("videos").document(docid).delete().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Log.d("rfqefwqte", it.result.toString())
+                        uploading?.dismiss()
+                        Log.d(
+                            "fgeglksgg",
+                            Html.fromHtml("<b>deletevideo at <a href='$s'>$s</a></b>").toString()
+                        )
+                        finish()
+                    }
+                }
+                Log.d("ESdgsetjsgsrgh", s.toString())
+            }
+
+            override fun doInBackground(vararg p0: Void?): String? {
+                val u = delete()
+                return u.deletevideo(imageurl)
+            }
+        }
+
+        val uv = deletevideo()
+        uv.execute()
+    }
+
 
     override fun onPause() {
         super.onPause()
@@ -61,7 +119,7 @@ class Video_open_Activity : AppCompatActivity() {
 //        videoplayer.suspend()
     }
 
-    private fun managelike(compititionname: String, documentid : String) {
+    private fun managelike(compititionname: String, documentid: String) {
         Log.d("arhgerherth", like.drawable.toString())
         Log.d("arhgerherth", getDrawable(R.drawable.ic_liked).toString())
 
@@ -95,7 +153,7 @@ class Video_open_Activity : AppCompatActivity() {
         }
     }
 
-    fun setlikes(compititionname: String, documentid : String) {
+    fun setlikes(compititionname: String, documentid: String) {
 
         db.collection("competitions").document(compititionname).collection("Videos")
             .document(documentid)

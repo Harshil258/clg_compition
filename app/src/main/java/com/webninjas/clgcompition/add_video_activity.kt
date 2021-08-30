@@ -26,6 +26,14 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import com.potyvideo.library.AndExoPlayerView
 
+import android.app.ProgressDialog
+import android.database.Cursor
+
+import android.os.AsyncTask
+import android.provider.MediaStore
+import android.text.Html
+
+
 class add_video_activity : AppCompatActivity() {
 
     lateinit var upload: TextView
@@ -69,12 +77,90 @@ class add_video_activity : AppCompatActivity() {
         upload.setOnClickListener {
             if (imagepath != "") {
                 Log.d("ESdgsergsrgh", imagepath)
-                uploadvideo(imagepath)
+//                uploadvideo(imagepath)
+                uploadVideo(imagepath)
 
             } else {
                 Toast.makeText(this, "Please select video", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+
+    private fun uploadVideo(imagepath: String) {
+        class UploadVideo :
+            AsyncTask<Void?, Void?, String?>() {
+            var uploading: ProgressDialog? = null
+            override fun onPreExecute() {
+                super.onPreExecute()
+                uploading = ProgressDialog.show(
+                    this@add_video_activity,
+                    "Uploading File",
+                    "Please wait...",
+                    false,
+                    false
+                )
+
+            }
+
+            override fun onPostExecute(s: String?) {
+                super.onPostExecute(s)
+
+                Log.d("fgegsgg", Html.fromHtml("<b>Uploaded at <a href='$s'>$s</a></b>").toString())
+
+                if (s == "Could not upload"){
+                    Toast.makeText(
+                        this@add_video_activity,
+                        "Video could not Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }else{
+                    Log.d("ESdgsergsrgh", s.toString())
+                    db = FirebaseFirestore.getInstance()
+
+
+                    val sdf = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
+                    val currentDateandTime: String = sdf.format(Date())
+                    val data = hashMapOf(
+                        "number" to MOBILE_NO,
+                        "timestamp" to currentDateandTime,
+                        "url" to s,
+                        "compititionname" to pref.competitionname
+                    )
+
+                    Log.d("Agagsg", pref.competitionname.toString())
+
+                    db.collection("videos").document()
+                        .set(data)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                progressView.visibility = View.GONE
+                                Toast.makeText(
+                                    this@add_video_activity,
+                                    "Video Has Been Upload Successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                uploading!!.dismiss()
+                                finish()
+                            }
+                        }
+
+                }
+
+//                textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='$s'>$s</a></b>"))
+//                textViewResponse.setMovementMethod(LinkMovementMethod.getInstance())
+            }
+
+            override fun doInBackground(vararg p0: Void?): String? {
+                val u = Upload()
+                return u.uploadVideo(imagepath)
+            }
+
+
+        }
+
+        val uv = UploadVideo()
+        uv.execute()
     }
 
     private fun uploadvideo(imagepath: String) {

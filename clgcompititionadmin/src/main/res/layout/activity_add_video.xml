@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,8 +23,8 @@
             android:layout_height="match_parent"
             app:andexo_aspect_ratio="aspect_match"
             app:andexo_play_when_ready="true"
-            app:andexo_show_controller="true"
-            app:andexo_resize_mode="Fit" />
+            app:andexo_resize_mode="Fit"
+            app:andexo_show_controller="true" />
 
     </LinearLayout>
 
@@ -50,8 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_margin="10dp"
-        android:visibility="gone"
         android:theme="@style/Theme.AppCompat"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/upload"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,13 +71,13 @@
     <TextView
         android:id="@+id/upload"
         android:layout_width="150dp"
-        android:layout_margin="20dp"
         android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/button_back"
         android:gravity="center"
         android:text="Upload"
-        android:background="@drawable/button_back"
-        android:textSize="25sp"
         android:textAlignment="center"
+        android:textSize="25sp"
         android:theme="@style/textbacktheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

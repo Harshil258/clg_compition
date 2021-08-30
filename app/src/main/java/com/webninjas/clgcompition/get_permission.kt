@@ -9,7 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.tuyenmonkey.mkloader.MKLoader
+import com.webninjas.clgcompition.pref.CLASSNAME
+import com.webninjas.clgcompition.pref.CLG_NAME
 import com.webninjas.clgcompition.pref.MOBILE_NO
+import com.webninjas.clgcompition.pref.ROLL_NO
 import com.webninjas.clgcompition.pref.USERNAME
 import com.webninjas.clgcompition.pref.getpref
 import com.webninjas.clgcompition.pref.setpref
@@ -67,10 +70,10 @@ class get_permission : AppCompatActivity() {
                             Log.d("ARherhersdrgrheh", USERNAME + " AEgf")
 
                             val data = hashMapOf(
-                                "USERNAME" to pref.USERNAME,
-                                "ROLL_NO" to pref.ROLL_NO,
-                                "CLASSNAME" to pref.CLASSNAME,
-                                "CLG_NAME" to pref.CLG_NAME,
+                                "USERNAME" to USERNAME,
+                                "ROLL_NO" to ROLL_NO,
+                                "CLASSNAME" to CLASSNAME,
+                                "CLG_NAME" to CLG_NAME,
                                 "getpermiossion" to "false"
                             )
 

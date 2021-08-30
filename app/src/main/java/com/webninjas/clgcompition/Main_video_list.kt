@@ -96,7 +96,8 @@ class Main_video_list : AppCompatActivity() {
                             document.data?.get("url").toString(),
                             competitionname.toString(),
                             document.id.toString(),
-                            false
+                            false,
+                            document.data?.get("number").toString()
                         )
                     )
                 }

@@ -76,6 +76,7 @@ class videolist_adapter(var context: Context, var list: List<videolist_model>) :
             intent.putExtra("videourl", list[position].videourl)
             intent.putExtra("documentid", list[position].documentid)
             intent.putExtra("compititionname", list[position].compititionname)
+            intent.putExtra("mobilenumber", list[position].number)
             context.startActivity(intent)
         }
 

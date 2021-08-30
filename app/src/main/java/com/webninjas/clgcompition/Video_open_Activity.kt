@@ -1,12 +1,17 @@
 package com.webninjas.clgcompition
 
+import android.app.ProgressDialog
 import android.net.Uri
+import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
+import android.view.View
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.potyvideo.library.AndExoPlayerView
+import com.webninjas.clgcompition.pref.MOBILE_NO
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
@@ -15,6 +20,7 @@ class Video_open_Activity : AppCompatActivity() {
 
     lateinit var layout : LinearLayout
     lateinit var like : ImageView
+    lateinit var delete: ImageView
     var isliked = false
     var db: FirebaseFirestore = FirebaseFirestore.getInstance()
     lateinit var videoplayer: VideoView
@@ -27,11 +33,15 @@ class Video_open_Activity : AppCompatActivity() {
 
         layout = findViewById(R.id.layout)
         like = findViewById(R.id.like)
+        delete = findViewById(R.id.delete)
+
 //        videoplayer = findViewById(R.id.videoplayer)
 
         var videourl = intent.getStringExtra("videourl").toString()
         var documentid = intent.getStringExtra("documentid").toString()
         var compititionname = intent.getStringExtra("compititionname").toString()
+        var mobilenumber = intent.getStringExtra("mobilenumber").toString()
+
         andExoPlayerView = findViewById<AndExoPlayerView>(R.id.andExoPlayerView)
         andExoPlayerView.setSource(videourl)
 
@@ -41,8 +51,52 @@ class Video_open_Activity : AppCompatActivity() {
             managelike(compititionname,documentid)
         }
 
+        if (mobilenumber == MOBILE_NO) {
+            delete.visibility = View.VISIBLE
+            delete.setOnClickListener {
+                deletevideo(videourl,documentid)
+            }
+        }
 
     }
+
+    private fun deletevideo(imageurl: String, docid : String) {
+        class deletevideo :
+            AsyncTask<Void?, Void?, String?>() {
+            var uploading: ProgressDialog? = null
+            override fun onPreExecute() {
+                super.onPreExecute()
+                uploading = ProgressDialog.show(
+                    this@Video_open_Activity,
+                    "Deleting File",
+                    "Please wait...",
+                    false,
+                    false
+                )
+            }
+            override fun onPostExecute(s: String?) {
+                super.onPostExecute(s)
+
+                db.collection("videos").document(docid).delete().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        Log.d("rfqefwqte", it.result.toString())
+                        uploading?.dismiss()
+                        Log.d("fgeglksgg", Html.fromHtml("<b>deletevideo at <a href='$s'>$s</a></b>").toString())
+                        finish()
+                    }
+                }
+                Log.d("ESdgsetjsgsrgh", s.toString())
+            }
+
+            override fun doInBackground(vararg p0: Void?): String? {
+                val u = delete()
+                return u.deletevideo(imageurl)
+            }
+        }
+        val uv = deletevideo()
+        uv.execute()
+    }
+
 
     private fun setlikes(compititionname: String, documentid: String) {
         db.collection("videos").document(documentid)

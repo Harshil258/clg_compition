@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable-v24/ic_baseline_delete_24.xml" value="0.18981481481481483" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/button_back.xml" value="0.15462962962962962" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/cardback.xml" value="0.19375" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/drawable/edittext_back.xml" value="0.15462962962962962" />
@@ -24,12 +25,14 @@
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/video_item.xml" value="0.1142857142857143" />
         <entry key="..\:/All consoles/webninjas/clgcompition/app/src/main/res/layout/videolist_menu.xml" value="0.1142857142857143" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19375" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.19076923076923077" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_add_video.xml" value="0.17760416666666667" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_addcompitition.xml" value="0.12571428571428572" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_compition_list.xml" value="0.17760416666666667" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_get_permission.xml" value="0.17760416666666667" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_get_userdetails.xml" value="0.1" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_main_video_list.xml" value="0.16530797101449277" />
+        <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/activity_video_open.xml" value="0.1" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/video_item.xml" value="0.17527173913043478" />
         <entry key="..\:/All consoles/webninjas/clgcompition/clgcompititionadmin/src/main/res/layout/videolist_menu.xml" value="0.17760416666666667" />
       </map>

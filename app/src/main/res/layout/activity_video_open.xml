@@ -32,21 +32,35 @@
         android:layout_height="wrap_content"
         android:background="@color/purple_200"
         android:gravity="center"
-        android:orientation="vertical"
+        android:weightSum="2"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
             android:id="@+id/like"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_weight="1"
             android:padding="10dp"
             android:src="@drawable/ic_notliked"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-    </LinearLayout>
 
+        <ImageView
+            android:id="@+id/delete"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

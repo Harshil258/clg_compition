@@ -24,11 +24,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import com.potyvideo.library.AndExoPlayerView
+
+import android.app.ProgressDialog
+
+import android.os.AsyncTask
+import android.text.Html
 import com.webninjas.clgcompititionadmin.pref.MOBILE_NO
 
 
 class add_video_activity : AppCompatActivity() {
-
 
     lateinit var upload: TextView
     lateinit var choosevideo: TextView
@@ -48,6 +52,8 @@ class add_video_activity : AppCompatActivity() {
         layout = findViewById(R.id.layout)
         progressView = findViewById(R.id.progressView)
         andExoPlayerView = findViewById<AndExoPlayerView>(R.id.andExoPlayerView)
+
+        Log.d("Agagsg", pref.competitionname.toString())
 
         choosevideo.setOnClickListener {
 
@@ -69,7 +75,8 @@ class add_video_activity : AppCompatActivity() {
         upload.setOnClickListener {
             if (imagepath != "") {
                 Log.d("ESdgsergsrgh", imagepath)
-                uploadvideo(imagepath)
+//                uploadvideo(imagepath)
+                uploadVideo(imagepath)
 
             } else {
                 Toast.makeText(this, "Please select video", Toast.LENGTH_SHORT).show()
@@ -77,34 +84,71 @@ class add_video_activity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == 3000) {
-            val list = EasyVideoPicker.getSelectedVideos(data)  //ArrayList<VideoModel>
-            choosevideo.visibility = View.GONE
-            imagepath = list?.get(0)?.videoPath.toString()
 
-            layout.visibility = View.VISIBLE
+    private fun uploadVideo(imagepath: String) {
+        class UploadVideo :
+            AsyncTask<Void?, Void?, String?>() {
+            var uploading: ProgressDialog? = null
+            override fun onPreExecute() {
+                super.onPreExecute()
+                uploading = ProgressDialog.show(
+                    this@add_video_activity,
+                    "Uploading File",
+                    "Please wait...",
+                    false,
+                    false
+                )
 
-            andExoPlayerView.setSource(imagepath)
+            }
+
+            override fun onPostExecute(s: String?) {
+                super.onPostExecute(s)
+
+                Log.d("fgegsgg", Html.fromHtml("<b>Uploaded at <a href='$s'>$s</a></b>").toString())
+
+                Log.d("ESdgsergsrgh", s.toString())
+                db = FirebaseFirestore.getInstance()
+
+                val sdf = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
+                val currentDateandTime: String = sdf.format(Date())
+                val data = hashMapOf(
+                    "number" to MOBILE_NO,
+                    "timestamp" to currentDateandTime,
+                    "url" to s,
+                    "compititionname" to pref.competitionname
+                )
+
+                Log.d("Agagsg", pref.competitionname.toString())
+
+                db.collection("videos").document()
+                    .set(data)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            progressView.visibility = View.GONE
+                            Toast.makeText(
+                                this@add_video_activity,
+                                "Video Has Been Upload Successfully",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            uploading!!.dismiss()
+                            finish()
+                        }
+                    }
+//                textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='$s'>$s</a></b>"))
+//                textViewResponse.setMovementMethod(LinkMovementMethod.getInstance())
+            }
+
+            override fun doInBackground(vararg p0: Void?): String? {
+                val u = Upload()
+                return u.uploadVideo(imagepath)
+            }
+
+
         }
-    }
 
-    override fun onPause() {
-        super.onPause()
-        andExoPlayerView.stopPlayer()
+        val uv = UploadVideo()
+        uv.execute()
     }
-
-    override fun onResume() {
-        super.onResume()
-        andExoPlayerView.startPlayer()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        andExoPlayerView.releasePlayer()
-    }
-
 
     private fun uploadvideo(imagepath: String) {
 
@@ -163,6 +207,35 @@ class add_video_activity : AppCompatActivity() {
                 }
         }
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == 3000) {
+            val list = EasyVideoPicker.getSelectedVideos(data)  //ArrayList<VideoModel>
+            choosevideo.visibility = View.GONE
+            imagepath = list?.get(0)?.videoPath.toString()
+
+            layout.visibility = View.VISIBLE
+
+            andExoPlayerView.setSource(imagepath)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        andExoPlayerView.stopPlayer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        andExoPlayerView.startPlayer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        andExoPlayerView.releasePlayer()
+    }
+
 
 
 }

@@ -31,11 +31,11 @@
             android:name=".get_permission"
             android:exported="true" />
         <activity
-            android:name=".add_video_activity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
+            android:name=".compition_list"
             android:exported="true" />
         <activity
-            android:name=".compition_list"
+            android:name=".add_video_activity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
             android:exported="true" />
         <activity
             android:name=".Main_video_list"
@@ -55,6 +55,8 @@
         <activity
             android:name=".VerificationActivity"
             android:exported="true" />
+
     </application>
+
 
 </manifest>
