@@ -41,6 +41,7 @@ class Video_open_Activity : AppCompatActivity() {
         var compititionname = intent.getStringExtra("compititionname").toString()
         var number = intent.getStringExtra("number").toString()
         var videoname = intent.getStringExtra("videoname").toString()
+
         andExoPlayerView = findViewById<AndExoPlayerView>(R.id.andExoPlayerView)
         andExoPlayerView.setSource(videourl)
 
